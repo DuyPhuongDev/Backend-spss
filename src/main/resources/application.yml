@@ -1,21 +1,16 @@
 spring:
-  security:
-    user:
-      name: user
-      password: 123456
   datasource:
-    url: jdbc:mysql://localhost:3306/spss
-    username: root
-    password: 123456
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQLDialect
   app:
-    jwtSecret: mySecretKey123912738aopsgjnspkmndfsopkvajoirjg94gf2opfng2moknm
+    jwtSecret: ${JWT_SECRET_KEY}
     jwtExpirationMs: 172800000
   servlet:
     multipart:
@@ -26,25 +21,14 @@ frontend-url: http://localhost:5173
 
 # cloudinary
 cloudinary:
-  cloud-name: dawqytffc
-  api-key: 233677167656433
-  api-secret: 8kfFxYc6xPzaMM25boKVCESDpaE
+  cloud-name: ${CLOUD_NAME}
+  api-key: ${CLOUD_API_KEY}
+  api-secret: ${CLOUD_API_SECRET}
 
 # vnpay
 payment:
   vnPay:
-    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-    tmnCode: M1K8IF92
-    secretKey: BW8ZE1YP4ZAKCE1QAHEWS9INRYAE7Z71
+    url: ${VNPAY_URL}
+    tmnCode: ${VNPAY_CODE}
+    secretKey: ${VNPAY_SECRET}
     returnUrl: http://localhost:8080/api/payment/vnpay-callback
-
-#logging:
-#  level.org:
-#    springframework:
-#      security: DEBUG
-#      orm.jpa.JpaBaseConfiguration: ERROR
-#    hibernate:
-#      SQL: OFF
-#      type.descriptor.sql.BasicBinder: OFF
-#      orm.deprecation: ERROR
-#      engine.transaction.jta.platform.internal.JtaPlatformInitiator: ERROR

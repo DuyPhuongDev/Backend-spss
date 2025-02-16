@@ -1,13 +1,17 @@
 # Sử dụng openjdk 21 làm base image
 FROM openjdk:21-jdk-slim
-# Chỉ định thư mục làm việc trong container cho ứng dụng
+
+# Chỉ định thư mục làm việc trong container
 WORKDIR /app
 
-# Sao chép file JAR vào thư mục làm việc
-COPY target/be-0.0.1-SNAPSHOT.jar app.jar
+# Copy source code vào container
+COPY . .
 
-# Mở cổng cho ứng dụng (giả sử ứng dụng chạy trên port 8080)
+# Chạy Maven để build ứng dụng
+RUN ./mvnw clean package -DskipTests
+
+# Mở cổng cho ứng dụng
 EXPOSE 8080
 
-# Lệnh để chạy ứng dụng
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Lệnh chạy ứng dụng (chạy file JAR trong target/)
+ENTRYPOINT ["java", "-jar", "target/be-0.0.1-SNAPSHOT.jar"]
