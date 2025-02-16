@@ -34,9 +34,9 @@ public class StatisticResponseImpl implements StatisticService {
 
         //access
         LocalDate date = LocalDate.now(); // Ngày cụ thể
-        String startOfDay = date.atStartOfDay().toString(); // 00:00:00
-        String endOfDay = date.plusDays(1).atStartOfDay().toString(); // 00:00:00 ngày tiếp theo
-        String yesterday = date.minusDays(1).atStartOfDay().toString();
+        LocalDateTime startOfDay = date.atStartOfDay(); // 00:00:00
+        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay(); // 00:00:00 ngày tiếp theo
+        LocalDateTime yesterday = date.minusDays(1).atStartOfDay();
         Map<String, Integer> visitCounts = new HashMap<>();
         visitCounts.put("today", visitRepository.countVisitsInDay(startOfDay, endOfDay));
         visitCounts.put("yesterday", visitRepository.countVisitsInDay(yesterday, startOfDay));
