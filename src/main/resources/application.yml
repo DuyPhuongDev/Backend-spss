@@ -31,4 +31,4 @@ payment:
     url: ${VNPAY_URL}
     tmnCode: ${VNPAY_CODE}
     secretKey: ${VNPAY_SECRET}
-    returnUrl: http://localhost:8080/api/payment/vnpay-callback
+    returnUrl: https://backend-spss.onrender.com/api/payment/vnpay-callback

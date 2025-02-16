@@ -44,7 +44,14 @@ public class StatisticResponseImpl implements StatisticService {
         // printing
         LocalDateTime startOfWeek = getStartOfWeek();
         LocalDateTime endOfWeek = getEndOfWeek();
-        List<PrintJobStats> stats = printJobRepository.countPrintJobsPerDayInWeek(startOfWeek, endOfWeek);
+        List<Object[]> queryResult = printJobRepository.countPrintJobsPerDayInWeek(startOfWeek, endOfWeek);
+        List<PrintJobStats> stats = new ArrayList<>();
+        for (Object[] row : queryResult) {
+            stats.add(new PrintJobStats(((Number) row[0]).intValue(),
+                    ((Number) row[1]).longValue(),
+                    ((Number) row[2]).longValue()));
+        }
+
 
         // Tạo danh sách chứa các ngày trong tuần (từ Chủ Nhật đến Thứ Bảy)
         List<PrintJobStats> completeStats = new ArrayList<>();

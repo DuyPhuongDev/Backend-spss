@@ -17,13 +17,13 @@ public interface PrintJobRepository extends JpaRepository<PrintJob, Long> {
     @Query(value = "SELECT p FROM PrintJob p WHERE YEARWEEK(p.jobStartTime, 1) = YEARWEEK(CURDATE(), 1)")
     List<PrintJob> findAllPrintJobsThisWeek();
 
-
-    @Query("SELECT new hcmut.spss.be.dtos.response.PrintJobStats(DAYOFWEEK(p.jobStartTime), SUM(p.numberPagePrint), COUNT(*)) " +
-            "FROM PrintJob p " +
-            "WHERE p.jobStartTime >= :startOfWeek AND p.jobStartTime < :endOfWeek " +
-            "GROUP BY DAYOFWEEK(p.jobStartTime)")
-    List<PrintJobStats> countPrintJobsPerDayInWeek(@Param("startOfWeek") LocalDateTime startOfWeek,
-                                                   @Param("endOfWeek") LocalDateTime endOfWeek);
+    @Query(value = "SELECT EXTRACT(DOW FROM p.job_start_time) + 1, SUM(p.number_page_print), COUNT(*) " +
+            "FROM print_job p " +
+            "WHERE p.job_start_time >= :startOfWeek AND p.job_start_time < :endOfWeek " +
+            "GROUP BY EXTRACT(DOW FROM p.job_start_time)",
+            nativeQuery = true)
+    List<Object[]> countPrintJobsPerDayInWeek(@Param("startOfWeek") LocalDateTime startOfWeek,
+                                              @Param("endOfWeek") LocalDateTime endOfWeek);
 
     @Query(value = "SELECT SUM(number_page_print) FROM print_job " +
             "WHERE job_start_time >= :startOfDay AND job_start_time < :endOfDay", nativeQuery = true)

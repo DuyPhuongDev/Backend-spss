@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class PrintJobStats {
@@ -14,12 +13,12 @@ public class PrintJobStats {
     private long totalPagesPrinted;
     private long totalPrintings;
 
-//    // Constructor, getters và setters
+    public PrintJobStats(Number dayOfWeek, Number totalPagesPrinted, Number totalPrintings) {
+        this.dayOfWeek = dayOfWeek.intValue(); // Chuyển từ Number về int
+        this.totalPagesPrinted = totalPagesPrinted.longValue();
+        this.totalPrintings = totalPrintings.longValue();
+    }
 //
-//    public PrintJobStats(int dayOfWeek, long totalPagesPrinted, long totalPrintings) {
-//        this.dayOfWeek = dayOfWeek;
-//        this.totalPagesPrinted = totalPagesPrinted;
-//    }
 //
 //    public int getDayOfWeek() {
 //        return dayOfWeek;
